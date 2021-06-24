@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Blackbaud.Appfx.MultiselectDemo/Blackbaud.Appfx.MultiselectDemo.Catalog/obj/Debug
