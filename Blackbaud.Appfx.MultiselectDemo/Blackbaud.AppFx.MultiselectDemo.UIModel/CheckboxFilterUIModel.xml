@@ -1,0 +1,10 @@
+﻿<UIModelWizardMetadata>
+  <SpecFileName>CheckBoxFilter.xml</SpecFileName>
+  <Namespace></Namespace>
+  <ClassName>CheckBoxFilterUIModel</ClassName>
+  <HtmlInfo GenerateHtml="true">
+    <HtmlFile>CheckBoxFilter.html</HtmlFile>
+    <HtmlFolder>htmlforms\multiselectdemo\</HtmlFolder>
+  </HtmlInfo>
+  <GenerateFromDatabase>true</GenerateFromDatabase>
+</UIModelWizardMetadata>

@@ -1,0 +1,36 @@
+<CustomUIModelMetadata
+    xmlns="bb_appfx_customuimodelmetadata"
+    xmlns:common="bb_appfx_commontypes"
+    ID="833621cf-c32b-4a4e-8979-f769631429b1"
+    Name="CheckBox Filter"
+    Description="A UI model for a checkBox."
+    Author="Blackbaud Product Development"
+    >
+
+  <FormMetaData xmlns="bb_appfx_commontypes">
+    <FormFields>
+      <FormField FieldID="OPTIONLIST" DataType="XML" >
+        <Collection RenderStyle="CheckBoxList">
+          <Fields>
+            <FormField FieldID="ID" DataType="Integer" Hidden="true" />
+            <FormField FieldID="CHECKED" DataType="Boolean" />
+            <FormField FieldID="NAME" DataType="String" />
+          </Fields>
+        </Collection>
+      </FormField>
+    </FormFields>
+
+    <WebUIComponent>
+      <UIModel AssemblyName="Blackbaud.AppFx.MultiselectDemo.UIModel.dll" ClassName="Blackbaud.AppFx.MultiselectDemo.UIModel.CheckBoxFilterUIModel" />
+      <WebUI>
+        <ExternalResource Url="browser/htmlforms/multiselectdemo/CheckBoxFilter.html" />
+      </WebUI>
+    </WebUIComponent>
+
+    <UIActions>
+      <UIAction ActionID="SELECTALL" Caption="Select all" />
+      <UIAction ActionID="UNSELECTALL" Caption="Unselect all" />
+    </UIActions>
+  </FormMetaData>
+
+</CustomUIModelMetadata>

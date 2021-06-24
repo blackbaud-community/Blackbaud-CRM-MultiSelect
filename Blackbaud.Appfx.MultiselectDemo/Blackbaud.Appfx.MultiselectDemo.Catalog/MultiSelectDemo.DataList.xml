@@ -1,0 +1,94 @@
+<DataListSpec
+    xmlns="bb_appfx_datalist"
+    xmlns:c="bb_appfx_commontypes"
+    ID="4671ebf3-1118-4194-9c74-c670da034e26"
+    Name="Multi-Select Demo List"
+    Description="A data list demonstrating a multi-select filter."
+    Author="Blackbaud Product Development"
+    >
+
+  <SPDataList SPName="USP_USR_DATALIST_MULTISELECTDEMO">
+
+    <c:CreateProcedureSQL>
+      <![CDATA[
+create procedure dbo.USP_USR_DATALIST_MULTISELECTDEMO
+(
+	@CONTEXTID uniqueidentifier,
+  @TRANSACTIONTYPEFILTERMODE tinyint = 0,
+  @TRANSACTIONTYPECODES xml = null  
+)
+as
+	set nocount on;
+
+  declare @TRANSACTIONTYPEFILTER table (
+	  TRANSACTIONTYPECODE tinyint
+  );
+
+  insert into @TRANSACTIONTYPEFILTER (TRANSACTIONTYPECODE)
+  select
+	  T.c.value('(ID)[1]','tinyint')
+  from 
+	  @TRANSACTIONTYPECODES.nodes('/TRANSACTIONTYPECODES/ITEM') T(c);
+
+  -- FOR BEST PERFORMANCE, use dynamic SQL for optional filters.
+  -- Also include site security where relevant.
+  select 
+	  FINANCIALTRANSACTION.ID [ID],
+	  FINANCIALTRANSACTION.BASEAMOUNT [AMOUNT],
+	  FINANCIALTRANSACTION.DATE [DATE],
+	  FINANCIALTRANSACTION.TYPE [TYPE]
+  from dbo.FINANCIALTRANSACTION
+  where 
+	  CONSTITUENTID = @CONTEXTID
+	  and (@TRANSACTIONTYPEFILTERMODE = 0 or FINANCIALTRANSACTION.TYPECODE in (select TRANSACTIONTYPECODE from @TRANSACTIONTYPEFILTER));
+			]]>
+    </c:CreateProcedureSQL>
+  </SPDataList>
+
+  <Context ContextRecordType="Constituent" RecordIDParameter="CONTEXTID" />
+
+  <Parameters>
+    <FormMetaData xmlns="bb_appfx_commontypes">
+      <FormFields>
+        <FormField Caption="Transaction types" FieldID="TRANSACTIONTYPEFILTERMODE" DataType="TinyInt" Required="true" DefaultValueText="0">
+          <ValueList>
+            <Items>
+              <Item>
+                <Value>0</Value>
+                <Label>All transaction types</Label>
+              </Item>
+              <Item>
+                <Value>1</Value>
+                <Label>Selected transaction types</Label>
+              </Item>
+            </Items>
+          </ValueList>
+        </FormField>
+        <FormField FieldID="TRANSACTIONTYPECODES" Caption="Transaction type" DataType="XML" Hidden="true">
+          <Collection>
+            <Fields>
+              <FormField FieldID="ID" Caption="ID" DataType="TinyInt" Hidden="true" />
+            </Fields>
+          </Collection>
+        </FormField>
+      </FormFields>
+
+      <WebUIComponent>
+        <UIModel AssemblyName="Blackbaud.AppFx.MultiselectDemo.UIModel.dll" ClassName="Blackbaud.AppFx.MultiselectDemo.UIModel.MultiSelectDemoListUIModel" />
+        <WebUI>
+          <ExternalResource Url="browser/htmlforms/multiselectdemo/MultiSelectDemoList.html" />
+        </WebUI>
+      </WebUIComponent>
+    </FormMetaData>
+  </Parameters>
+
+  <Output>
+    <OutputFields>
+      <OutputField FieldID="ID" Caption="ID" DataType="Guid" IsHidden="true" />
+      <OutputField FieldID="AMOUNT" Caption="Amount" DataType="Money" />
+      <OutputField FieldID="DATE" Caption="Date" DataType="Date" />
+      <OutputField FieldID="TYPE" Caption="Transaction type" DataType="String" />
+    </OutputFields>
+  </Output>
+
+</DataListSpec>
