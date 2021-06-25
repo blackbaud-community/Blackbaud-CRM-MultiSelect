@@ -1,0 +1,10 @@
+﻿<UIModelWizardMetadata>
+  <SpecFileName>MultiSelectDemo.DataList.xml</SpecFileName>
+  <Namespace></Namespace>
+  <ClassName>MultiSelectDemoListUIModel</ClassName>
+  <HtmlInfo GenerateHtml="true">
+    <HtmlFile>MultiSelectDemoList.html</HtmlFile>
+    <HtmlFolder>htmlforms\multiselectdemo\</HtmlFolder>
+  </HtmlInfo>
+  <GenerateFromDatabase>true</GenerateFromDatabase>
+</UIModelWizardMetadata>
